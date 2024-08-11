@@ -1,0 +1,30 @@
+<div class="flex flex-col gap-10  justify-center">
+    <div class="flex flex-col gap-2 w-min">
+        <label for="username">Name</label>
+        <input pInputText id="name" aria-describedby="username-help" [(ngModel)]="customers.name"
+            class="border-2 bg-gray-300 p-2 rounded-lg" [(ngModel)]="nameInput" />
+        <small id="username-help">
+            Enter your name
+        </small>
+    </div>
+    <div *ngFor="let workout of workOuts ; let i = index" class="flex flex-row gap-5 items-center">
+        <input type="text" pInputText [(ngModel)]="workout.type" class="border-2 bg-gray-300 p-2 rounded-lg"
+            disabled="true" />
+        <input pInputText type="number" id="username" [(ngModel)]="workout.minutes"
+            class="border-2 bg-gray-300 p-2 rounded-lg" placeholder="Workout Time in minutes" />
+        <i class="pi pi-minus border-2 border-red-700 w-100 p-2 rounded-lg text-red-700" style="font-size: 1rem" (click)="removeWorkout(i)"></i>
+    </div>
+    <div class="flex flex-row gap-5 items-center">
+        <p-dropdown [options]="workoutTypes" [(ngModel)]="selectedWorkout" [checkmark]="true" optionLabel="name"
+            placeholder="Select a Workout" class="border rounded-lg w-100" />
+        <input pInputText type="number" id="username" [(ngModel)]="workoutTime"
+            class="border-2 bg-gray-300 p-2 rounded-lg" placeholder="Workout Time in minutes" />
+        <i class="pi pi-plus border-2 border-green-700 w-100 p-2 rounded-lg text-green-700" style="font-size: 1rem"  (click)="addWorkout()"></i>
+    </div>
+    <button class="border-2 border-blue-700 w-fit p-2 rounded-lg text-blue-700  font-semibold" (click)="submitData()">
+        Add Data
+    </button>
+</div>
+<div class="pt-5">
+    <app-table [usersData]="usersData"></app-table>
+</div>

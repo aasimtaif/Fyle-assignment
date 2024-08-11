@@ -1,0 +1,44 @@
+<div class=" flex  gap-10 justify-content-center items-center mt-5">
+    <p-floatLabel>
+        <input pInputText  class="border-2 bg-gray-200 p-2 rounded-lg" (input)="filterTableData()" [(ngModel)]="searchInput" />
+
+        <label for="username">Search</label>
+    </p-floatLabel>
+    <p-dropdown [options]="workoutTypes" [(ngModel)]="selectedWorkout" [checkmark]="true" optionLabel="name" [showClear]="true"
+    (onChange)="filterTableData()" 
+        placeholder="Select a Workout" class="border rounded-lg w-100" />
+
+        <p-button label="Clear" [outlined]="true" icon="pi pi-filter-slash" (onClick)="clearFilters()" 
+        class="border-2 border-blue-700 w-fit p-2 rounded-lg text-blue-700  font-semibold"></p-button>
+        
+</div>
+
+<div class="card mt-5">
+    <p-table [value]="filteredCustomers"
+     [paginator]="true" [rows]="5" [tableStyle]="{ 'min-width': '50rem', }"
+        [rowsPerPageOptions]="[3,5, 10, 20]"
+        
+        >
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width:25%">Name</th>
+                <th style="width:25%">workouts</th>
+                <th style="width:25%">Number OF workouts</th>
+                <th style="width:25%">Total WorkOut Time</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-customer>
+            <tr (click)="goToWorkout(customer)"  class="cursor-pointer
+            ">
+                <td>{{ customer.name }}</td>
+                <td>
+                    <ng-container *ngFor="let workout of customer.workouts; let last = last">
+                        {{ workout.type }}<span *ngIf="!last">, </span>
+                    </ng-container>
+                </td>
+                <td>{{ getNoOfWorkouts(customer.workouts) }}</td>
+                <td>{{ getTotalWorkoutTime(customer.workouts) }} </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
