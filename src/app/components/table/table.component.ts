@@ -7,6 +7,7 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { workoutTypes } from '../../Data/WorkoutType';
 import { Router } from '@angular/router';
+import { userData as DummyData } from '../../Data/dummyData';
 interface WorkOutType {
   name: string;
   code: string;
@@ -44,21 +45,18 @@ export class TableComponent implements OnInit {
   searchInput: string = '';
 
   @Input() usersData: Customer[] = [];
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes['usersData'] && !changes['usersData'].firstChange) {
-      this.customers = this.usersData.length ? this.usersData : JSON.parse(localStorage.getItem('usersData') || '[]').reverse();
+      this.customers = this.usersData.length ? [...this.usersData,...DummyData].reverse() : JSON.parse(localStorage.getItem('usersData') || '[]').reverse();
       this.filteredCustomers = this.customers.reverse();
     }
   }
-  
-
-
   ngOnInit() {
     
     this.workoutTypes = workoutTypes;
-    let storedUsersData = JSON.parse(localStorage.getItem('usersData') || '[]').reverse();
-    this.customers = this.usersData.length?this.usersData:storedUsersData
-    this.filteredCustomers = this.customers;
+    this.customers = this.customers = this.usersData.length ? [...this.usersData,...DummyData].reverse() : DummyData.reverse();
+    this.filteredCustomers = this.customers.reverse();
 
   }
 
